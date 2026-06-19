@@ -1,11 +1,11 @@
 /* ============================================================================
  * seed.js — Placares REAIS da Copa 2026 (situação em 18/06/2026)
- *  Fonte: páginas oficiais de cada grupo na Wikipédia (1ª rodada completa = 24 jogos).
- *  Formato: { idDoJogo: [golsMandante, golsVisitante] }
- *  Jogos ainda não disputados simplesmente NÃO aparecem aqui.
- *  O botão "Restaurar dados oficiais" no site recarrega exatamente estes resultados.
+ * Fonte: páginas oficiais de cada grupo na Wikipédia (1ª rodada completa = 24 jogos).
+ * Formato: { idDoJogo: [golsMandante, golsVisitante] }
+ * Jogos ainda não disputados simplesmente NÃO aparecem aqui.
+ * O botão "Restaurar dados oficiais" no site recarrega exatamente estes resultados.
  * ==========================================================================*/
-const SEED_RESULTS = {
+window.SEED_RESULTS = {
   // Grupo A
   A1:[2,0], A2:[2,1],
   // Grupo B
