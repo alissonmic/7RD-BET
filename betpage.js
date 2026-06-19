@@ -5,7 +5,13 @@
  *  IMPORTANTE: ao digitar um placar, NÃO reconstruímos os inputs (só atualizamos
  *  os pontos e o ranking) — assim o número digitado não some e o foco fica.
  * ==========================================================================*/
-let estado = carregarEstado();
+import { carregarEstado, salvarEstado } from './storage.js';
+
+let estado;
+carregarEstado((dados) => {
+  estado = dados;
+  render(); // Certifique-se de chamar a função que desenha a tela aqui
+});
 
 const $ = sel => document.querySelector(sel);
 const DIAS_SEMANA = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
