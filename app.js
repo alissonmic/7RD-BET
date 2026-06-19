@@ -2,7 +2,13 @@
  * app.js — Renderização da interface e edição ao vivo
  * ==========================================================================*/
 
-let estado = carregarEstado();
+import { carregarEstado, salvarEstado } from './storage.js';
+
+let estado;
+carregarEstado((dados) => {
+  estado = dados;
+  render(); // Certifique-se de chamar a função que desenha a tela aqui
+});
 
 const $ = sel => document.querySelector(sel);
 
