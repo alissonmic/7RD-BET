@@ -1,0 +1,292 @@
+/* ===========================================================================
+   Tema "Copa 2026" — azul estádio, dourado do troféu, gramado, grupos coloridos
+   (design baseado na arte oficial de grupos da FIFA 2026)
+   =========================================================================== */
+:root{
+  --bg:#06122e;           /* azul-marinho profundo */
+  --bg2:#0a1c44;
+  --card:#0e2150;         /* cartão azul */
+  --card2:#0b1a40;
+  --line:#26467f;         /* contornos azulados */
+  --ink:#081640;          /* fundo de inputs */
+  --green:#27c25a;        /* verde gramado vibrante */
+  --green-d:#159346;
+  --gold:#ffcf33;         /* dourado troféu */
+  --gold-d:#e0a800;
+  --red:#e23b3b;
+  --blue:#2b7fff;
+  --text:#eaf1ff;
+  --muted:#9fb3d8;
+  --shadow:0 8px 22px rgba(0,0,0,.45);
+}
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; color:var(--text);
+  font-family:"Segoe UI",Roboto,system-ui,Arial,sans-serif;
+  background:
+    radial-gradient(1100px 460px at 50% -8%, #1b3f8f 0%, transparent 62%),
+    linear-gradient(180deg, #06122e 0%, #0a1c44 100%);
+  background-attachment:fixed; min-height:100vh;
+}
+
+/* ---------- Topbar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  padding:12px 22px;
+  background:linear-gradient(90deg,#081a40 0%, #103064 100%);
+  border-bottom:3px solid var(--gold);
+  box-shadow:var(--shadow);
+}
+.brand{ display:flex; align-items:center; gap:12px; }
+.trophy{ font-size:34px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.5)); }
+.brand h1{ font-size:21px; margin:0; letter-spacing:.5px; font-weight:800; text-transform:uppercase; }
+.brand .sub{ margin:2px 0 0; font-size:12px; color:var(--muted); }
+.nav{ display:flex; gap:8px; margin-left:auto; }
+.nav-link{
+  color:var(--text); text-decoration:none; font-weight:600; font-size:14px;
+  padding:8px 14px; border-radius:999px; background:rgba(255,255,255,.08);
+}
+.nav-link:hover{ background:rgba(255,255,255,.18); }
+.tools{ display:flex; gap:8px; flex-wrap:wrap; }
+.btn{
+  cursor:pointer; border:none; border-radius:999px; padding:9px 16px;
+  font-weight:700; font-size:13px;
+}
+.btn-gold{ background:linear-gradient(180deg,var(--gold),var(--gold-d)); color:#3a2a00; }
+.btn-gold:hover{ filter:brightness(1.08); }
+.btn-ghost{ background:transparent; color:var(--text); border:1px solid var(--line); }
+.btn-ghost:hover{ background:rgba(255,255,255,.08); }
+.btn-green{ background:linear-gradient(180deg,var(--green),var(--green-d)); color:#04230f; }
+.btn-green:hover{ filter:brightness(1.08); }
+.btn-blue{ background:linear-gradient(180deg,#3b8dff,#1f5fc0); color:#04122e; }
+.btn-blue:hover{ filter:brightness(1.08); }
+
+/* ---------- Sections ---------- */
+.section{ padding:26px 22px; max-width:1640px; margin:0 auto; }
+.section-title{
+  font-size:26px; margin:0 0 6px; display:inline-block; font-weight:800; text-transform:uppercase;
+  letter-spacing:.5px; padding-bottom:6px; border-bottom:4px solid var(--gold);
+}
+.hint{ color:var(--muted); font-size:13px; margin:8px 0 18px; }
+.leg{ display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:middle; margin:0 2px 0 8px; }
+.leg-q{ background:var(--green); }
+.leg-3{ background:var(--gold); }
+.leg-out{ background:#34508a; }
+
+/* ---------- Grupos ---------- */
+.grupos-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:18px;
+}
+.grupo-card{
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:var(--shadow);
+}
+.grupo-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px; color:#fff;
+  background-color:#2a4a8c;   /* sobrescrito por cor de cada grupo (inline) */
+  background-image:linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.22));
+}
+.grupo-head h3{ margin:0; font-size:17px; font-weight:800; text-transform:uppercase; letter-spacing:.5px;
+  text-shadow:0 1px 2px rgba(0,0,0,.4); }
+.grupo-head .badge{ font-size:11px; color:#fff; background:rgba(0,0,0,.28); padding:3px 9px; border-radius:999px; }
+table.tabela{ width:100%; border-collapse:collapse; font-size:13px; }
+table.tabela th, table.tabela td{ padding:7px 8px; text-align:center; }
+table.tabela th{ color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; }
+table.tabela td.time{ text-align:left; }
+table.tabela tbody tr{ border-top:1px solid rgba(255,255,255,.05); }
+table.tabela tr.row-q{ background:rgba(39,194,90,.14); }
+table.tabela tr.row-3{ background:rgba(255,207,51,.13); }
+.pos-pill{
+  display:inline-flex; width:19px; height:19px; align-items:center; justify-content:center;
+  border-radius:50%; font-size:11px; font-weight:700; background:#0c1f4a; color:var(--muted);
+}
+tr.row-q .pos-pill{ background:var(--green); color:#04230f; }
+tr.row-3 .pos-pill{ background:var(--gold); color:#3a2a00; }
+.flag{ width:24px; height:17px; object-fit:cover; border-radius:2px; vertical-align:middle;
+  margin-right:8px; box-shadow:0 0 0 1px rgba(0,0,0,.35); }
+.pts{ font-weight:800; color:var(--gold); }
+.tie-warn{ color:var(--red); font-weight:700; cursor:help; }
+
+/* Lista de jogos editáveis */
+.jogos-list{ padding:8px 12px 12px; border-top:1px dashed var(--line); }
+.jogo-row{ display:flex; align-items:center; gap:6px; padding:4px 2px; font-size:12px; }
+.jogo-row .data{ width:42px; color:var(--muted); font-size:10px; flex:0 0 auto; }
+.jogo-row .lado{ flex:1 1 0; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.jogo-row .lado.casa{ text-align:right; }
+.jogo-row .lado.fora{ text-align:left; }
+.score-in{
+  width:34px; text-align:center; border-radius:6px; border:1px solid var(--line);
+  background:var(--ink); color:var(--text); padding:4px 0; font-weight:700;
+}
+.score-in:focus{ outline:2px solid var(--green); }
+.x{ color:var(--muted); }
+
+/* ---------- Bracket ---------- */
+.bracket-wrap{ overflow-x:auto; padding-bottom:6px; }
+.bracket{
+  --gap:34px;                 /* espaço entre colunas (onde ficam as linhas) */
+  --conn:#ffffff;             /* cor das linhas de ligação (branco chamativo) */
+  display:flex; align-items:stretch; gap:var(--gap);
+  width:100%; min-width:1320px;   /* garante cartões largos o bastante; abaixo disso rola */
+  min-height:920px;
+}
+.round{ display:flex; flex-direction:column; flex:1 1 0; min-width:0; }
+.round.center{ flex:0 0 210px; }
+.round-title{
+  height:30px; line-height:30px; text-align:center; font-size:12px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.5px; color:var(--muted);
+  white-space:nowrap; overflow:hidden;
+}
+.matches{ display:flex; flex-direction:column; flex:1 1 0; }
+.mw{ flex:1 1 0; display:flex; flex-direction:column; justify-content:center; position:relative; }
+
+/* cartão de jogo: .match é só o "contexto" das linhas; .minner é o visual (recortado) */
+.match{ position:relative; }
+.minner{
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid var(--line); border-radius:10px; overflow:hidden; box-shadow:var(--shadow);
+}
+.match.prov .minner{ opacity:.94; border-style:dashed; }
+.mhead{ font-size:9.5px; color:var(--muted); padding:3px 9px; background:rgba(0,0,0,.28); }
+.slot{
+  display:flex; align-items:center; gap:7px; padding:7px 9px; font-size:13px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.slot:first-of-type{ border-top:none; }
+.slot .nome{ flex:1 1 0; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* sigla oficial: largura natural, NUNCA trunca */
+.slot .nome.sigla{ flex:0 0 auto; min-width:max-content; overflow:visible; text-overflow:clip;
+  font-weight:800; letter-spacing:.8px; font-size:13.5px; }
+.slot .spacer{ flex:1 1 0; min-width:6px; }
+.slot.placeholder .nome{ color:var(--muted); font-style:italic; }
+.slot.vencedor{ background:rgba(39,194,90,.20); font-weight:700; }
+/* mata-mata por clique: vagas com time são clicáveis para avançar */
+.slot.clicavel{ cursor:pointer; transition:background .12s; }
+.slot.clicavel:hover{ background:rgba(255,255,255,.08); }
+.slot.vencedor.clicavel:hover{ background:rgba(39,194,90,.30); }
+.slot .check{ color:var(--green); font-weight:900; flex:0 0 auto; }
+.pen{ font-size:10px; color:var(--gold); padding:4px 9px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.pen button{
+  cursor:pointer; border:1px solid var(--gold-d); background:transparent; color:var(--gold);
+  border-radius:5px; font-size:10px; padding:1px 6px;
+}
+.pen button.sel{ background:var(--gold); color:#3a2a00; font-weight:700; }
+
+/* ---- linhas de ligação das chaves (conectores) ---- */
+.round.left  .mw::after{ content:''; position:absolute; top:50%; right:calc(var(--gap)/-2);
+  width:calc(var(--gap)/2); height:3px; background:var(--conn); }
+.round.right .mw::after{ content:''; position:absolute; top:50%; left:calc(var(--gap)/-2);
+  width:calc(var(--gap)/2); height:3px; background:var(--conn); }
+/* linha vertical unindo cada par (no topo do par = ímpar) */
+.round.left.has-pairs  .mw:nth-child(odd)::before{ content:''; position:absolute; top:50%;
+  right:calc(var(--gap)/-2); width:3px; height:100%; background:var(--conn); }
+.round.right.has-pairs .mw:nth-child(odd)::before{ content:''; position:absolute; top:50%;
+  left:calc(var(--gap)/-2);  width:3px; height:100%; background:var(--conn); }
+/* trecho de entrada (do meio do vão até o cartão), nas rodadas que recebem */
+.round.left:not(.first)  .match::before{ content:''; position:absolute; top:50%; right:100%;
+  width:calc(var(--gap)/2); height:3px; background:var(--conn); }
+.round.right:not(.first) .match::after{ content:''; position:absolute; top:50%; left:100%;
+  width:calc(var(--gap)/2); height:3px; background:var(--conn); }
+/* entrada da final (dos dois lados) */
+.round.center .match::before{ content:''; position:absolute; top:50%; right:100%;
+  width:calc(var(--gap)/2); height:3px; background:var(--conn); }
+.round.center .match::after{ content:''; position:absolute; top:50%; left:100%;
+  width:calc(var(--gap)/2); height:3px; background:var(--conn); }
+
+/* Destaque do caminho do Brasil */
+.slot.destaque{ background:linear-gradient(90deg,rgba(255,221,0,.22),rgba(0,151,57,.22)); box-shadow:inset 3px 0 0 #ffdf00; }
+.slot.destaque.vencedor{ background:linear-gradient(90deg,rgba(255,221,0,.34),rgba(0,151,57,.34)); }
+.slot.destaque .nome{ font-weight:800; }
+.match.tem-destaque .minner{ box-shadow:0 0 0 2px #ffdf00, var(--shadow); }
+table.tabela tr.row-destaque{ box-shadow:inset 3px 0 0 #ffdf00; }
+
+/* Final + campeão + 3º lugar */
+.match.final-card .minner{ border:2px solid var(--gold); }
+.match.final-card .mhead{ background:rgba(255,210,74,.18); color:var(--gold); font-weight:700; text-align:center; }
+.bracket-extra{ display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:18px; }
+.campeao{
+  text-align:center; padding:14px 26px; border-radius:12px;
+  background:linear-gradient(180deg,rgba(255,210,74,.20),rgba(255,210,74,.06));
+  border:1px solid var(--gold-d);
+}
+.campeao .lbl{ font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:1px; }
+.campeao .nome{ font-size:20px; font-weight:800; }
+.terceiro-box{ width:260px; }
+.terceiro-box .round-title{ height:auto; line-height:1.4; margin-bottom:6px; }
+
+/* ---------- 7RD BET (bolão) ---------- */
+.nav-bet{ background:linear-gradient(180deg,var(--gold),var(--gold-d)); color:#3a2a00; font-weight:800; }
+.nav-bet:hover{ filter:brightness(1.06); background:linear-gradient(180deg,var(--gold),var(--gold-d)); }
+.bet-grid{ display:grid; grid-template-columns:minmax(280px,360px) 1fr; gap:20px; align-items:start; }
+.bet-lado{ min-width:0; }
+.bet-sub{ font-size:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted);
+  margin:6px 0 10px; border-bottom:1px solid var(--line); padding-bottom:6px; }
+.bet-lado-jogos .bet-sub{ margin-top:0; }
+.bet-vazio{ color:var(--muted); font-size:13px; font-style:italic; }
+
+/* ranking */
+table.bet-rank{ background:linear-gradient(180deg,var(--card),var(--card2)); border:1px solid var(--line);
+  border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+table.bet-rank thead th{ background:rgba(0,0,0,.25); }
+table.bet-rank tr.lider{ background:rgba(255,207,51,.16); }
+table.bet-rank tr.lider .pos-pill{ background:var(--gold); color:#3a2a00; }
+
+/* adicionar / chips de apostadores */
+.bet-add{ display:flex; gap:8px; margin-bottom:10px; }
+.bet-add input{ flex:1 1 0; min-width:0; border-radius:8px; border:1px solid var(--line);
+  background:var(--ink); color:var(--text); padding:8px 10px; font-size:13px; }
+.bet-add input:focus{ outline:2px solid var(--green); }
+.bet-apostadores{ display:flex; flex-wrap:wrap; gap:7px; }
+.chip{ display:inline-flex; align-items:center; gap:6px; background:#0c1f4a; border:1px solid var(--line);
+  border-radius:999px; padding:5px 6px 5px 12px; font-size:13px; }
+.chip-x{ cursor:pointer; border:none; background:rgba(255,255,255,.12); color:var(--text);
+  width:18px; height:18px; border-radius:50%; font-weight:700; line-height:1; }
+.chip-x:hover{ background:var(--red); }
+
+/* jogos de aposta */
+#bet-jogos{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+.bet-jogo{ background:linear-gradient(180deg,var(--card),var(--card2)); border:1px solid var(--line);
+  border-radius:14px; overflow:hidden; box-shadow:var(--shadow); }
+.bet-jogo-head{ background:rgba(0,0,0,.28); padding:8px 14px; font-size:12px; color:var(--muted);
+  text-transform:uppercase; letter-spacing:.4px; font-weight:700; }
+.bet-confronto{ display:flex; align-items:center; justify-content:center; gap:12px; padding:12px;
+  font-size:18px; font-weight:800; }
+.bet-confronto .vs{ color:var(--muted); font-weight:600; }
+.bsigla{ letter-spacing:.6px; }
+.bet-real{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; padding:8px 14px;
+  border-top:1px dashed var(--line); border-bottom:1px solid var(--line); }
+.bet-real-lbl{ font-size:12px; color:var(--muted); }
+.bet-realin, .bet-pin input{ width:34px; text-align:center; border-radius:6px; border:1px solid var(--line);
+  background:var(--ink); color:var(--text); padding:5px 0; font-weight:700; }
+.bet-realin:focus, .bet-pin input:focus{ outline:2px solid var(--green); }
+.bet-puxar{ cursor:pointer; margin-left:auto; border:1px solid var(--line); background:transparent;
+  color:var(--muted); border-radius:6px; font-size:10px; padding:3px 8px; }
+.bet-puxar:hover{ color:var(--text); background:rgba(255,255,255,.06); }
+table.bet-palps{ width:100%; }
+table.bet-palps .bet-pin{ white-space:nowrap; }
+table.bet-palps .bet-pin .x{ margin:0 3px; }
+
+@media (max-width:900px){ .bet-grid{ grid-template-columns:1fr; } }
+
+/* legenda das regras (página 7RD BET) */
+.regras{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+.regra-bloco{ background:linear-gradient(180deg,var(--card),var(--card2)); border:1px solid var(--line);
+  border-left:4px solid var(--gold); border-radius:12px; padding:14px 16px; box-shadow:var(--shadow); }
+.regra-bloco h3{ margin:0 0 8px; font-size:15px; color:var(--gold); }
+.regra-bloco p{ margin:6px 0; font-size:13.5px; line-height:1.5; color:var(--text); }
+.regra-bloco ul{ margin:6px 0; padding-left:18px; font-size:13.5px; line-height:1.6; }
+.regra-bloco li{ margin:4px 0; }
+.regra-bloco .obs{ color:var(--muted); font-size:12.5px; font-style:italic; }
+.regras-pts{ width:100%; border-collapse:collapse; font-size:13.5px; }
+.regras-pts td{ padding:6px 8px; border-top:1px solid rgba(255,255,255,.06); vertical-align:top; }
+.regras-pts td.p{ font-weight:800; color:var(--gold); width:42px; text-align:center; font-size:16px; }
+
+.rodape{ text-align:center; color:var(--muted); font-size:12px; padding:24px; }
+
+@media (max-width:560px){
+  .nav{ order:3; width:100%; margin-left:0; }
+  .brand h1{ font-size:18px; }
+}

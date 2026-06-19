@@ -1,0 +1,16 @@
+{
+  "short_name": "7RDBet",
+  "name": "7RD BET - Copa 2026",
+  "icons": [
+    {
+      "src": "br.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#06122e",
+  "theme_color": "#081a40",
+  "display": "standalone",
+  "orientation": "portrait"
+}

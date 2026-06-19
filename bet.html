@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bolão 7RD BET</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><h1>7RD BET - Bolão</h1></div>
+    <div class="nav"><a href="index.html" class="nav-link">Voltar aos Grupos</a></div>
+  </div>
+
+  <div class="section">
+    <!-- Controles de Apostadores -->
+    <div class="bet-add">
+      <input type="text" id="bet-novo" placeholder="Nome do apostador">
+      <button id="bet-add-btn" class="btn btn-blue">Adicionar</button>
+    </div>
+    <div id="bet-apostadores" class="bet-apostadores"></div>
+    
+    <div class="bet-grid">
+      <!-- Ranking -->
+      <div class="bet-lado">
+        <h3 class="bet-sub">Ranking</h3>
+        <div id="bet-ranking"></div>
+      </div>
+      <!-- Jogos -->
+      <div class="bet-lado bet-lado-jogos">
+        <h3 class="bet-sub">Jogos do Dia</h3>
+        <div id="bet-jogos"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts do Bolão -->
+  <script src="data.js"></script>
+  <script src="horarios.js"></script>
+  <script src="storage.js"></script>
+  <script src="bet.js"></script>
+  <script src="betpage.js"></script>
+</body>
+</html>

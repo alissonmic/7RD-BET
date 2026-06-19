@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7RD BET - Copa 2026</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- Barra Superior -->
+  <div class="topbar">
+    <div class="brand"><h1>7RD BET</h1></div>
+    <div class="nav">
+      <a href="bet.html" class="btn btn-gold">Ir para o Bolão</a>
+    </div>
+  </div>
+
+  <!-- Container principal (o seu JS vai preencher isso) -->
+  <div class="section" id="app-content">
+    <h2>Fase de Grupos</h2>
+    <!-- Aqui entram os grupos renderizados pelo seu script principal, caso exista um -->
+  </div>
+
+  <!-- Scripts base da Copa -->
+  <script src="data.js"></script>
+  <script src="horarios.js"></script>
+  <script src="seed.js"></script>
+  <script src="storage.js"></script>
+  
+  <!-- Script do PWA (para instalar no celular) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
