@@ -18,7 +18,8 @@ const GRUPO_COR = {
 
 function flagImg(teamId){
   const t = TIMES[teamId];
-  return `<img class="flag" src="${t.flag}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
+  return `<img class="flag" src="https://flagcdn.com/w40/${t.flag}.png" alt="" loading="lazy"
+            onerror="this.style.display='none'">`;
 }
 
 /* ---------------- GRUPOS ---------------- */
@@ -90,9 +91,7 @@ function slotHTML(slot, m, lado){
   const isVenc = m.vencedorId && m.vencedorId === slot.id;
   const cls = 'slot' + (slot.id ? ' clicavel' : ' placeholder') + (isVenc ? ' vencedor' : '')
             + (slot.id === DESTAQUE ? ' destaque' : '');
-  // No bracket usamos a sigla oficial FIFA (o próprio id) para aproveitar o espaço;
-  // o nome completo fica no tooltip (title).
-  const clicavel = !!slot.id;        // só dá pra clicar numa vaga já preenchida
+  const clicavel = !!slot.id;        
   const nome = slot.id
     ? (flagImg(slot.id) + '<span class="nome sigla" title="' + TIMES[slot.id].nome + '">' + slot.id +
        '</span><span class="spacer"></span>' + (isVenc ? '<span class="check">✓</span>' : ''))
@@ -124,7 +123,6 @@ function matchHTML(id, bk, opts){
 function renderBracket(){
   const bk = montarBracket(estado.placares, estado.ko);
 
-  // aviso
   const completo = bk.terceiros.completo;
   const dicaClique = ' &nbsp;👆 <b>Clique num time</b> para avançá-lo (clique de novo para desfazer).';
   $('#ko-aviso').innerHTML = (completo
@@ -134,7 +132,7 @@ function renderBracket(){
 
   const cols = COLUNAS.map(col => {
     const ehFinal = col.lado === 'center';
-    const first = col.ids.length === 8;            // colunas de 16 avos não recebem linha de entrada
+    const first = col.ids.length === 8;            
     const hasPairs = col.ids.length > 1;
     const mws = col.ids.map(id =>
       `<div class="mw">${matchHTML(id, bk, {final: ehFinal})}</div>`).join('');
@@ -146,7 +144,6 @@ function renderBracket(){
   }).join('');
   $('#bracket').innerHTML = cols;
 
-  // Área central abaixo do bracket: campeão + disputa de 3º lugar
   const champ = bk.jogos[104].vencedorId;
   const campeao = champ
     ? `<div class="campeao"><div class="lbl">🏆 Campeão</div>
@@ -176,15 +173,13 @@ function renderTudo(){
 
 /* ---------------- SIMULAÇÃO ---------------- */
 function simularResto(){
-  // 1) completa os jogos de grupo restantes pelas odds (menos zebras)
   JOGOS_GRUPO.forEach(([id, , casa, fora]) => {
     if (!estado.placares[id]) estado.placares[id] = golsPorOdds(casa, fora, OVER_UNDER[id]);
   });
-  // 2) avança todo o mata-mata pelas odds (cada vencedor alimenta o próximo)
   KNOCKOUT.slice().sort((a, b) => a.id - b.id).forEach(ko => {
     const bk = montarBracket(estado.placares, estado.ko);
     const m = bk.jogos[ko.id];
-    if (!m.casa.id || !m.fora.id || m.decidido) return;   // sem times definidos ou já decidido
+    if (!m.casa.id || !m.fora.id || m.decidido) return;   
     estado.ko[ko.id] = { venc: vencedorPorOdds(m.casa.id, m.fora.id) };
   });
   salvarEstado(estado);
@@ -192,10 +187,8 @@ function simularResto(){
 }
 
 /* ---------------- PROJEÇÃO PELAS ODDS ---------------- */
-// força do time = ln(prob. implícita de ser campeão) — menor odd ⇒ maior força
 const forca = id => Math.log(1 / (CHAMP_ODDS[id] || 1000));
 
-// amostrador de Poisson (algoritmo de Knuth)
 function poisson(lambda){
   const L = Math.exp(-lambda);
   let k = 0, p = 1;
@@ -206,35 +199,29 @@ function poisson(lambda){
 const _sig   = z => 1 / (1 + Math.exp(-z));
 const _logit = x => { x = Math.min(0.999, Math.max(0.001, x)); return Math.log(x / (1 - x)); };
 
-// gols de um confronto — modelo REALISTA ataque/defesa + odds + over/under:
-//  • o TOTAL esperado vem dos gols que cada time costuma fazer/levar (FORCAS) — placares reais
-//  • as ODDS (chance de vitória) só DIVIDEM esse total entre os times (não inflam a soma)
-//  • se houver linha de over/under do jogo, o total é ajustado para bater com o mercado
 function golsPorOdds(idCasa, idFora, ouLine){
   const ALPHA = 0.8;
   const fc = FORCAS[idCasa] || {gf:1.2, ga:1.2};
   const ff = FORCAS[idFora] || {gf:1.2, ga:1.2};
-  const baseC = (fc.gf + ff.ga) / 2;            // gols esperados do mandante (ataque dele × defesa do rival)
-  const baseF = (ff.gf + fc.ga) / 2;            // gols esperados do visitante
-  const total = ouLine || (baseC + baseF);      // total realista (ou ajustado pelo over/under)
+  const baseC = (fc.gf + ff.ga) / 2;            
+  const baseF = (ff.gf + fc.ga) / 2;            
+  const total = ouLine || (baseC + baseF);      
   const d = forca(idCasa) - forca(idFora);
-  const share = _sig(_logit(baseC / (baseC + baseF)) + ALPHA * d);  // fração do total p/ o mandante
+  const share = _sig(_logit(baseC / (baseC + baseF)) + ALPHA * d);  
   const lc = Math.min(4.5, Math.max(0.12, total * share));
   const lf = Math.min(4.5, Math.max(0.12, total * (1 - share)));
   return [poisson(lc), poisson(lf)];
 }
 
-// vencedor de um mata-mata pelas odds (Bernoulli logístico nas forças; favorito favorecido)
 function vencedorPorOdds(idCasa, idFora){
   const K = 0.9;
   const p = 1 / (1 + Math.exp(-K * (forca(idCasa) - forca(idFora))));
   return (Math.random() < p) ? idCasa : idFora;
 }
 
-// preenche os jogos de grupo ainda não disputados conforme as odds (mantém os 24 oficiais)
 function preencherPelasOdds(){
   JOGOS_GRUPO.forEach(([id, , casa, fora]) => {
-    if (SEED_RESULTS[id]) return;            // jogo já aconteceu de verdade → não mexe
+    if (SEED_RESULTS[id]) return;            
     estado.placares[id] = golsPorOdds(casa, fora, OVER_UNDER[id]);
   });
   salvarEstado(estado);
@@ -251,7 +238,7 @@ function lerInt(v){
 document.addEventListener('input', (ev) => {
   const el = ev.target;
 
-  if (el.classList.contains('score-in')){           // placar de grupo
+  if (el.classList.contains('score-in')){           
     const id = el.dataset.jogo;
     const ins = document.querySelectorAll(`.score-in[data-jogo="${id}"]`);
     const gm = lerInt([...ins].find(i => i.dataset.lado === 'm').value);
@@ -263,7 +250,6 @@ document.addEventListener('input', (ev) => {
 });
 
 document.addEventListener('click', (ev) => {
-  // Mata-mata: clicar num time o faz avançar (clicar de novo no mesmo desfaz)
   const slot = ev.target.closest('.slot.clicavel[data-ko]');
   if (slot){
     const id = slot.dataset.ko, time = slot.dataset.venc;
