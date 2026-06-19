@@ -1,13 +1,9 @@
 /* ============================================================================
- * betpage.js — Página isolada do bolão "7RD BET" (bet.html) integrado com Firebase
- * Usa: TIMES/JOGOS_GRUPO (data.js), HORARIOS (horarios.js),
- * jogosDeAposta/pontos/rankingBolao (bet.js), estado (storage.js).
- * IMPORTANTE: ao digitar um placar, NÃO reconstruímos os inputs (só atualizamos
- * os pontos e o ranking) — assim o número digitado não some e o foco fica.
+ * betpage.js — Página isolada do bolão "7RD BET" (bet.html)
  * ==========================================================================*/
 import { carregarEstado, salvarEstado } from './storage.js';
 
-// 1. Puxa as dependências que estão nos outros arquivos globais (window)
+// Puxa as dependências globais via window (da ponte no HTML)
 const TIMES = window.TIMES;
 const jogosDeAposta = window.jogosDeAposta;
 const pontos = window.pontos;
@@ -15,10 +11,8 @@ const rankingBolao = window.rankingBolao;
 const _JOGO_INFO = window._JOGO_INFO;
 const _ehBrasil = window._ehBrasil;
 const _diaSemana = window._diaSemana;
-const baixarBackup = window.baixarBackup;
-const lerBackup = window.lerBackup;
 
-let estado; // Vai receber os dados do Firebase
+let estado;
 
 const $ = sel => document.querySelector(sel);
 const DIAS_SEMANA = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
@@ -167,6 +161,33 @@ function addApostador(){
 $('#bet-add-btn').addEventListener('click', addApostador);
 $('#bet-novo').addEventListener('keydown', (e) => { if (e.key === 'Enter') addApostador(); });
 
+/* --- FUNÇÕES DE BACKUP INCORPORADAS --- */
+function baixarBackup(state){
+  try {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'copa2026-7rdbet-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  } catch (e){ alert('Não foi possível gerar o backup.'); }
+}
+
+function lerBackup(file, onok){
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const s = JSON.parse(r.result);
+      if (!s || !s.placares) throw new Error('formato');
+      salvarEstado(s);
+      onok(s);
+    } catch (e){ alert('Arquivo de backup inválido.'); }
+  };
+  r.onerror = () => alert('Não foi possível ler o arquivo.');
+  r.readAsText(file);
+}
+
 // Backup em arquivo (.json) — baixar e restaurar
 $('#btn-backup').addEventListener('click', () => baixarBackup(estado));
 $('#btn-restore').addEventListener('click', () => $('#file-backup').click());
@@ -178,12 +199,8 @@ $('#file-backup').addEventListener('change', (e) => {
   e.target.value = '';
 });
 
-// 2. Inicialização via Firebase (substitui o antigo let estado = carregarEstado())
+// Inicialização Firebase
 carregarEstado((dados) => {
   estado = dados;
-  if (typeof render === 'function') {
-      render();
-  } else {
-      console.error("Função render não encontrada.");
-  }
+  render();
 });
