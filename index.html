@@ -57,7 +57,7 @@
        alocação dos melhores 3º colocados segue os parâmetros da FIFA.</p>
   </footer>
 
-<script type="module" src="firebase-config.js"></script>
+  <script type="module" src="firebase-config.js"></script>
   
   <script src="data.js"></script>
   <script src="seed.js"></script>
@@ -66,14 +66,26 @@
   <script src="thirds-table.js"></script>
   <script src="standings.js"></script>
   <script src="bracket.js"></script>
-  
+
+  <script>
+    window.TIMES = typeof TIMES !== 'undefined' ? TIMES : {};
+    window.ORDEM_GRUPOS = typeof ORDEM_GRUPOS !== 'undefined' ? ORDEM_GRUPOS : [];
+    window.JOGOS_GRUPO = typeof JOGOS_GRUPO !== 'undefined' ? JOGOS_GRUPO : [];
+    window.KNOCKOUT = typeof KNOCKOUT !== 'undefined' ? KNOCKOUT : [];
+    window.KO_AGENDA = typeof KO_AGENDA !== 'undefined' ? KO_AGENDA : {};
+    window.FORCAS = typeof FORCAS !== 'undefined' ? FORCAS : {};
+    window.OVER_UNDER = typeof OVER_UNDER !== 'undefined' ? OVER_UNDER : {};
+    window.CHAMP_ODDS = typeof CHAMP_ODDS !== 'undefined' ? CHAMP_ODDS : {};
+    window.SEED_RESULTS = typeof SEED_RESULTS !== 'undefined' ? SEED_RESULTS : {};
+    
+    window.classificacaoGrupo = typeof classificacaoGrupo !== 'undefined' ? classificacaoGrupo : null;
+    window.jogosDisputadosGrupo = typeof jogosDisputadosGrupo !== 'undefined' ? jogosDisputadosGrupo : null;
+    window.grupoCompleto = typeof grupoCompleto !== 'undefined' ? grupoCompleto : null;
+    window.montarBracket = typeof montarBracket !== 'undefined' ? montarBracket : null;
+  </script>
+
   <script type="module" src="storage.js"></script>
   <script type="module" src="app.js"></script>
-  
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
-    }
-  </script>
+
 </body>
 </html>
