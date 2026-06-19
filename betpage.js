@@ -1,17 +1,18 @@
 /* ============================================================================
  * betpage.js — Página isolada do bolão "7RD BET" (bet.html)
- *  Usa: TIMES/JOGOS_GRUPO (data.js), HORARIOS (horarios.js),
- *       jogosDeAposta/pontos/rankingBolao (bet.js), estado (storage.js).
- *  IMPORTANTE: ao digitar um placar, NÃO reconstruímos os inputs (só atualizamos
- *  os pontos e o ranking) — assim o número digitado não some e o foco fica.
  * ==========================================================================*/
 import { carregarEstado, salvarEstado } from './storage.js';
 
-let estado;
-carregarEstado((dados) => {
-  estado = dados;
-  render(); // Certifique-se de chamar a função que desenha a tela aqui
-});
+// Puxa as dependências que estão nos outros arquivos globais
+const TIMES = window.TIMES;
+const jogosDeAposta = window.jogosDeAposta;
+const pontos = window.pontos;
+const rankingBolao = window.rankingBolao;
+const _JOGO_INFO = window._JOGO_INFO;
+const _ehBrasil = window._ehBrasil;
+const _diaSemana = window._diaSemana;
+const baixarBackup = window.baixarBackup;
+const lerBackup = window.lerBackup;
 
 const $ = sel => document.querySelector(sel);
 const DIAS_SEMANA = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
@@ -27,7 +28,6 @@ function flagImg(id){
 const _betFlagSigla = id => flagImg(id) + '<b class="bsigla">' + id + '</b>';
 const lerInt = v => { if (v === '' || v == null) return null; const n = parseInt(v, 10); return (isNaN(n) || n < 0) ? null : n; };
 
-/* ---------- render (estrutura) ---------- */
 function renderApostadores(){
   const bet = estado.bet;
   $('#bet-apostadores').innerHTML = bet.apostadores.length
@@ -94,7 +94,6 @@ function renderJogos(){
 
 function render(){ renderApostadores(); renderRanking(); renderJogos(); }
 
-/* Atualiza SÓ os pontos e o ranking (sem reconstruir os inputs) — usado ao digitar */
 function atualizarDerivados(){
   const bet = estado.bet;
   jogosDeAposta().forEach(j => {
@@ -109,10 +108,9 @@ function atualizarDerivados(){
   renderRanking();
 }
 
-/* ---------- eventos ---------- */
 document.addEventListener('input', (ev) => {
   const el = ev.target;
-  if (el.classList.contains('bet-palp')){          // palpite (salva parcial; não rebuilda inputs)
+  if (el.classList.contains('bet-palp')){
     const id = el.dataset.jogo, nome = estado.bet.apostadores[+el.dataset.apidx];
     const ins = el.closest('tr').querySelectorAll('input.bet-palp');
     const gm = lerInt([...ins].find(i => i.dataset.lado === 'm').value);
@@ -122,7 +120,7 @@ document.addEventListener('input', (ev) => {
     else estado.bet.palpites[id][nome] = [gm, gv];
     salvarEstado(estado); atualizarDerivados();
   }
-  if (el.classList.contains('bet-realin')){         // resultado real (salva parcial)
+  if (el.classList.contains('bet-realin')){
     const id = el.dataset.jogo;
     const ins = el.closest('.bet-real').querySelectorAll('input.bet-realin');
     const gm = lerInt([...ins].find(i => i.dataset.lado === 'm').value);
@@ -160,7 +158,6 @@ function addApostador(){
 $('#bet-add-btn').addEventListener('click', addApostador);
 $('#bet-novo').addEventListener('keydown', (e) => { if (e.key === 'Enter') addApostador(); });
 
-// Backup em arquivo (.json) — baixar e restaurar
 $('#btn-backup').addEventListener('click', () => baixarBackup(estado));
 $('#btn-restore').addEventListener('click', () => $('#file-backup').click());
 $('#file-backup').addEventListener('change', (e) => {
@@ -171,4 +168,9 @@ $('#file-backup').addEventListener('change', (e) => {
   e.target.value = '';
 });
 
-render();
+// Inicialização via Firebase
+let estado;
+carregarEstado((dados) => {
+  estado = dados;
+  render();
+});
