@@ -1,10 +1,8 @@
-/* storage.js — Integrado com Firebase */
 import { db } from './firebase-config.js';
 import { ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const dbRef = ref(db, 'bolao/estado');
 
-// Função de carregar agora é ASSÍNCRONA (precisa de um callback)
 export function carregarEstado(callback) {
   onValue(dbRef, (snapshot) => {
     const data = snapshot.val();
@@ -12,12 +10,11 @@ export function carregarEstado(callback) {
   });
 }
 
-// Salvar agora envia para o Firebase
 export function salvarEstado(state) {
   set(dbRef, state);
 }
 
-// --- Funções Auxiliares (mantidas para o seu app funcionar) ---
+// Funções utilitárias mantidas (SEED_RESULTS deve estar disponível)
 function _seedPlacares(){
   const p = {};
   if (typeof SEED_RESULTS !== 'undefined') {
