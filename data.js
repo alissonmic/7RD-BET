@@ -1,14 +1,14 @@
 /* ============================================================================
  * data.js — Estrutura fixa da Copa do Mundo 2026 (não muda com os resultados)
- *  - TIMES: as 48 seleções (id, nome em PT, código de bandeira flagcdn)
- *  - GRUPOS: composição dos 12 grupos
- *  - JOGOS_GRUPO: os 72 jogos da fase de grupos (adversários + data, SEM placar)
- *  - KNOCKOUT: a árvore do mata-mata (jogos 73 a 104) com os "placeholders" FIFA
- *  - THIRD_SLOTS: quais grupos podem fornecer o 3º colocado de cada jogo dos 16 avos
+ * - TIMES: as 48 seleções (id, nome em PT, código de bandeira flagcdn)
+ * - GRUPOS: composição dos 12 grupos
+ * - JOGOS_GRUPO: os 72 jogos da fase de grupos (adversários + data, SEM placar)
+ * - KNOCKOUT: a árvore do mata-mata (jogos 73 a 104) com os "placeholders" FIFA
+ * - THIRD_SLOTS: quais grupos podem fornecer o 3º colocado de cada jogo dos 16 avos
  * Os placares reais ficam em seed.js; as edições do usuário ficam no localStorage.
  * ==========================================================================*/
 
-const TIMES = {
+window.TIMES = {
   // Grupo A
   MEX:{nome:'México',          flag:'mx'}, RSA:{nome:'África do Sul',   flag:'za'},
   KOR:{nome:'Coreia do Sul',   flag:'kr'}, CZE:{nome:'Chéquia',         flag:'cz'},
@@ -47,7 +47,7 @@ const TIMES = {
   GHA:{nome:'Gana',            flag:'gh'}, PAN:{nome:'Panamá',          flag:'pa'},
 };
 
-const GRUPOS = {
+window.GRUPOS = {
   A:['MEX','RSA','KOR','CZE'], B:['CAN','BIH','QAT','SUI'],
   C:['BRA','MAR','HAI','SCO'], D:['USA','PAR','AUS','TUR'],
   E:['GER','CUW','CIV','ECU'], F:['NED','JPN','SWE','TUN'],
@@ -56,10 +56,10 @@ const GRUPOS = {
   K:['POR','COD','UZB','COL'], L:['ENG','CRO','GHA','PAN'],
 };
 
-const ORDEM_GRUPOS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+window.ORDEM_GRUPOS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
 
 /* Os 72 jogos de grupo: [id, grupo, mandante, visitante, data] (placar vem do seed/edição) */
-const JOGOS_GRUPO = [
+window.JOGOS_GRUPO = [
   ['A1','A','MEX','RSA','2026-06-11'], ['A2','A','KOR','CZE','2026-06-11'],
   ['A3','A','CZE','RSA','2026-06-18'], ['A4','A','MEX','KOR','2026-06-18'],
   ['A5','A','CZE','MEX','2026-06-24'], ['A6','A','RSA','KOR','2026-06-24'],
@@ -111,7 +111,7 @@ const JOGOS_GRUPO = [
 
 /* Quais grupos podem fornecer o 3º colocado de cada jogo dos 16 avos (parâmetro FIFA).
    A combinação exata depende de QUAIS 8 grupos classificam um 3º — resolvida em thirds-table.js */
-const THIRD_SLOTS = [
+window.THIRD_SLOTS = [
   {jogo:74, grupos:['A','B','C','D','F']},
   {jogo:77, grupos:['C','D','F','G','H']},
   {jogo:79, grupos:['C','E','F','H','I']},
@@ -127,7 +127,7 @@ const THIRD_SLOTS = [
    {t:'terceiro', jogo:74}        -> melhor 3º alocado ao jogo 74 (via THIRD_SLOTS)
    {t:'vencedor', jogo:73}        -> vencedor do jogo 73
    {t:'perdedor', jogo:101}       -> perdedor do jogo 101 (disputa de 3º lugar) */
-const KNOCKOUT = [
+window.KNOCKOUT = [
   // 16 AVOS DE FINAL (73–88)  — lado: esq / dir para o layout espelhado
   {id:73, fase:'16avos', lado:'esq', casa:{t:'pos',pos:2,g:'A'}, fora:{t:'pos',pos:2,g:'B'}},
   {id:74, fase:'16avos', lado:'esq', casa:{t:'pos',pos:1,g:'E'}, fora:{t:'terceiro',jogo:74}},
@@ -173,11 +173,11 @@ const KNOCKOUT = [
   {id:104, fase:'final',    lado:'centro', casa:{t:'vencedor',jogo:101}, fora:{t:'vencedor',jogo:102}},
 ];
 
-const KNOCKOUT_POR_ID = {};
-KNOCKOUT.forEach(k => { KNOCKOUT_POR_ID[k.id] = k; });
+window.KNOCKOUT_POR_ID = {};
+window.KNOCKOUT.forEach(k => { window.KNOCKOUT_POR_ID[k.id] = k; });
 
 /* Agenda oficial do mata-mata: data e sede de cada jogo (73–104) */
-const KO_AGENDA = {
+window.KO_AGENDA = {
   73:{data:'2026-06-28', local:'Inglewood'},      74:{data:'2026-06-29', local:'Foxborough'},
   75:{data:'2026-06-29', local:'Guadalupe'},      76:{data:'2026-06-29', local:'Houston'},
   77:{data:'2026-06-30', local:'East Rutherford'},78:{data:'2026-06-30', local:'Arlington'},
@@ -196,7 +196,7 @@ const KO_AGENDA = {
   103:{data:'2026-07-18', local:'Miami Gardens'}, 104:{data:'2026-07-19', local:'East Rutherford'},
 };
 
-const NOME_FASE = {
+window.NOME_FASE = {
   '16avos':'16 avos de final', 'oitavas':'Oitavas de final',
   'quartas':'Quartas de final', 'semis':'Semifinais',
   'terceiro':'Disputa de 3º lugar', 'final':'Final',
