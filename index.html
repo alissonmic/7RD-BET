@@ -1,59 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>7RD BET - Bolão Copa 2026</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copa do Mundo 2026 — Chaveamento ao vivo</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <!-- Barra Superior -->
-  <div class="topbar">
-    <div class="brand"><h1>7RD BET</h1></div>
-    <!-- Botões de Backup que você tem no seu JS -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="trophy">🏆</span>
+      <div>
+        <h1>Copa do Mundo 2026</h1>
+        <p class="sub">Chaveamento ao vivo · 48 seleções · EUA · Canadá · México</p>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#grupos" class="nav-link">Grupos</a>
+      <a href="#chaveamento" class="nav-link">Chaveamento</a>
+      <a href="bet.html" class="nav-link nav-bet">🎲 7RD BET</a>
+    </nav>
     <div class="tools">
-      <button id="btn-backup" class="btn btn-ghost">Salvar Backup</button>
-      <button id="btn-restore" class="btn btn-ghost">Restaurar</button>
-      <input type="file" id="file-backup" accept=".json" style="display:none">
+      <button id="btn-odds" class="btn btn-blue">📊 Pelas odds</button>
+      <button id="btn-simular" class="btn btn-green">🎲 Simular resto</button>
+      <button id="btn-restaurar" class="btn btn-gold">Restaurar dados oficiais</button>
+      <button id="btn-limpar" class="btn btn-ghost">Limpar tudo</button>
+      <button id="btn-backup" class="btn btn-ghost" title="Baixar um arquivo de backup com tudo">💾 Backup</button>
+      <button id="btn-restore" class="btn btn-ghost" title="Restaurar a partir de um arquivo de backup">📂 Restaurar</button>
+      <input id="file-backup" type="file" accept="application/json,.json" hidden>
     </div>
-  </div>
+  </header>
 
-  <div class="section">
-    <!-- Adicionar Apostadores -->
-    <div class="bet-add">
-      <input type="text" id="bet-novo" placeholder="Nome do apostador (Ex: João)">
-      <button id="bet-add-btn" class="btn btn-blue">Adicionar Apostador</button>
-    </div>
-    <div id="bet-apostadores" class="bet-apostadores" style="margin-bottom: 20px;"></div>
-    
-    <div class="bet-grid">
-      <!-- Ranking -->
-      <div class="bet-lado">
-        <h3 class="bet-sub">Ranking do Bolão</h3>
-        <div id="bet-ranking"></div>
-      </div>
-      <!-- Jogos do Dia -->
-      <div class="bet-lado bet-lado-jogos">
-        <h3 class="bet-sub">Jogos de Aposta</h3>
-        <div id="bet-jogos"></div>
-      </div>
-    </div>
-  </div>
+  <main>
+    <section id="grupos" class="section">
+      <h2 class="section-title">Fase de Grupos</h2>
+      <p class="hint">Edite qualquer placar abaixo — a classificação e o chaveamento recalculam na hora.
+        <span class="leg leg-q"></span> classificado direto ·
+        <span class="leg leg-3"></span> 3º (briga por uma das 8 vagas) ·
+        <span class="leg leg-out"></span> eliminado</p>
+      <div id="grupos-grid" class="grupos-grid"></div>
+    </section>
 
-  <!-- Todos os seus scripts na ordem certa -->
-  <script src="data.js"></script>
-  <script src="horarios.js"></script>
-  <script src="seed.js"></script>
-  <script src="storage.js"></script>
-  <script src="bet.js"></script>
-  <script src="betpage.js"></script>
-  
-  <!-- Script para transformar em App de Celular -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
-    }
-  </script>
+    <section id="chaveamento" class="section">
+      <h2 class="section-title">Mata-mata</h2>
+      <p class="hint" id="ko-aviso"></p>
+      <div class="bracket-wrap">
+        <div id="bracket" class="bracket"></div>
+      </div>
+      <div id="bracket-extra" class="bracket-extra"></div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Site local · dados da 1ª rodada (18/06/2026) via páginas oficiais da Wikipédia ·
+       alocação dos 8 melhores 3º colocados segue os parâmetros de confronto da FIFA.</p>
+  </footer>
+
+  <!-- ordem importa: estrutura → seed → lógica → estado → app -->
+  <script src="js/data.js"></script>
+  <script src="data/seed.js"></script>
+  <script src="data/odds.js"></script>
+  <script src="data/forcas.js"></script>
+  <script src="js/thirds-table.js"></script>
+  <script src="js/standings.js"></script>
+  <script src="js/bracket.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
