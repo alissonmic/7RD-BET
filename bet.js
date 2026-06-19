@@ -1,8 +1,8 @@
 /* ============================================================================
  * bet.js — Aba "7RD BET" (bolão da fase de grupos)
- *  - jogosDeAposta(): escolhe o(s) "jogo(s) do dia" conforme as regras
- *  - pontos(palpite, real): pontuação detalhada de um palpite
- *  - rankingBolao(bet): tabela do ranking somando os pontos de todos os jogos
+ * - jogosDeAposta(): escolhe o(s) "jogo(s) do dia" conforme as regras
+ * - pontos(palpite, real): pontuação detalhada de um palpite
+ * - rankingBolao(bet): tabela do ranking somando os pontos de todos os jogos
  * ==========================================================================*/
 
 // info rápida (grupo/mandante/visitante) de cada jogo de grupo
@@ -78,3 +78,11 @@ function rankingBolao(bet){
   tab.forEach((r,i) => r.pos = i + 1);
   return tab;
 }
+
+// --- EXPOSIÇÃO PARA OS MÓDULOS (Firebase) ---
+window.jogosDeAposta = jogosDeAposta;
+window.pontos = pontos;
+window.rankingBolao = rankingBolao;
+window._JOGO_INFO = _JOGO_INFO;
+window._ehBrasil = _ehBrasil;
+window._diaSemana = _diaSemana;
