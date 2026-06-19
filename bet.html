@@ -94,15 +94,16 @@
     <p>7RD BET · bolão local · os dados ficam salvos no seu navegador. Horários em horário de Brasília.</p>
   </footer>
 
-  <!-- Todos os caminhos de pasta foram removidos -->
+<script type="module" src="firebase-config.js"></script>
+  
   <script src="data.js"></script>
   <script src="seed.js"></script>
   <script src="horarios.js"></script>
   <script src="bet.js"></script>
-  <script src="storage.js"></script>
-  <script src="betpage.js"></script>
   
-  <!-- Código para o PWA (App de celular) -->
+  <script type="module" src="storage.js"></script>
+  <script type="module" src="betpage.js"></script>
+  
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
