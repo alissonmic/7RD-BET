@@ -1,11 +1,11 @@
 /* ============================================================================
  * horarios.js — Horário de BRASÍLIA (data + hora) dos jogos restantes da
- *  fase de grupos (2ª e 3ª rodadas). Fonte: Trivela (calendário em BRT).
- *  A data é a do fuso de Brasília (jogos da madrugada nos EUA caem no dia
- *  seguinte aqui). Usado pela aba 7RD BET para escolher o "jogo do dia".
- *  Formato: { idJogo: { d:'YYYY-MM-DD', h:'HH:MM' } }
+ * fase de grupos (2ª e 3ª rodadas). Fonte: Trivela (calendário em BRT).
+ * A data é a do fuso de Brasília (jogos da madrugada nos EUA caem no dia
+ * seguinte aqui). Usado pela aba 7RD BET para escolher o "jogo do dia".
+ * Formato: { idJogo: { d:'YYYY-MM-DD', h:'HH:MM' } }
  * ==========================================================================*/
-const HORARIOS = {
+window.HORARIOS = {
   // 2ª RODADA
   A3:{d:'2026-06-18',h:'13:00'}, B3:{d:'2026-06-18',h:'16:00'},
   B4:{d:'2026-06-18',h:'19:00'}, A4:{d:'2026-06-18',h:'22:00'},
