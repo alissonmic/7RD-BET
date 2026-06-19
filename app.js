@@ -18,8 +18,7 @@ const GRUPO_COR = {
 
 function flagImg(teamId){
   const t = TIMES[teamId];
-  return `<img class="flag" src="https://flagcdn.com/w40/${t.flag}.png" alt="" loading="lazy"
-            onerror="this.style.display='none'">`;
+  return `<img class="flag" src="${t.flag}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
 }
 
 /* ---------------- GRUPOS ---------------- */
