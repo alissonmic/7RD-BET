@@ -1,4 +1,4 @@
-const CACHE_NAME = '7rdbet-v1';
+const CACHE_NAME = '7rdbet-v2';
 const ASSETS = [
   './', './index.html', './bet.html', './styles.css',
   './data.js', './horarios.js', './storage.js', './seed.js', 
