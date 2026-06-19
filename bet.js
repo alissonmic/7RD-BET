@@ -79,7 +79,7 @@ function rankingBolao(bet){
   return tab;
 }
 
-// --- EXPOSIÇÃO PARA OS MÓDULOS (Firebase) ---
+// --- EXPOSIÇÃO PARA OS MÓDULOS DO FIREBASE ---
 window.jogosDeAposta = jogosDeAposta;
 window.pontos = pontos;
 window.rankingBolao = rankingBolao;
