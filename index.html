@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>7RD BET - Copa 2026</title>
+  <title>7RD BET - Bolão Copa 2026</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
 </head>
@@ -11,24 +11,45 @@
   <!-- Barra Superior -->
   <div class="topbar">
     <div class="brand"><h1>7RD BET</h1></div>
-    <div class="nav">
-      <a href="bet.html" class="btn btn-gold">Ir para o Bolão</a>
+    <!-- Botões de Backup que você tem no seu JS -->
+    <div class="tools">
+      <button id="btn-backup" class="btn btn-ghost">Salvar Backup</button>
+      <button id="btn-restore" class="btn btn-ghost">Restaurar</button>
+      <input type="file" id="file-backup" accept=".json" style="display:none">
     </div>
   </div>
 
-  <!-- Container principal (o seu JS vai preencher isso) -->
-  <div class="section" id="app-content">
-    <h2>Fase de Grupos</h2>
-    <!-- Aqui entram os grupos renderizados pelo seu script principal, caso exista um -->
+  <div class="section">
+    <!-- Adicionar Apostadores -->
+    <div class="bet-add">
+      <input type="text" id="bet-novo" placeholder="Nome do apostador (Ex: João)">
+      <button id="bet-add-btn" class="btn btn-blue">Adicionar Apostador</button>
+    </div>
+    <div id="bet-apostadores" class="bet-apostadores" style="margin-bottom: 20px;"></div>
+    
+    <div class="bet-grid">
+      <!-- Ranking -->
+      <div class="bet-lado">
+        <h3 class="bet-sub">Ranking do Bolão</h3>
+        <div id="bet-ranking"></div>
+      </div>
+      <!-- Jogos do Dia -->
+      <div class="bet-lado bet-lado-jogos">
+        <h3 class="bet-sub">Jogos de Aposta</h3>
+        <div id="bet-jogos"></div>
+      </div>
+    </div>
   </div>
 
-  <!-- Scripts base da Copa -->
+  <!-- Todos os seus scripts na ordem certa -->
   <script src="data.js"></script>
   <script src="horarios.js"></script>
   <script src="seed.js"></script>
   <script src="storage.js"></script>
+  <script src="bet.js"></script>
+  <script src="betpage.js"></script>
   
-  <!-- Script do PWA (para instalar no celular) -->
+  <!-- Script para transformar em App de Celular -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
