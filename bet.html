@@ -1,102 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>7RD BET — Bolão da Copa 2026</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7RD BET - Bolão</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar">
+  <div class="topbar">
     <div class="brand">
       <span class="trophy">🎲</span>
       <div>
         <h1>7RD BET</h1>
-        <p class="sub">Bolão da firma · fase de grupos · Copa do Mundo 2026</p>
+        <div class="sub">Bolão da Fase de Grupos</div>
       </div>
     </div>
-    <nav class="nav">
-      <a href="index.html" class="nav-link">← Grupos &amp; Chaveamento</a>
-    </nav>
+    <div class="nav">
+      <a href="index.html" class="nav-link">← Voltar aos Grupos</a>
+    </div>
     <div class="tools">
-      <button id="btn-backup" class="btn btn-ghost" title="Baixar um arquivo de backup com tudo">💾 Backup</button>
-      <button id="btn-restore" class="btn btn-ghost" title="Restaurar a partir de um arquivo de backup">📂 Restaurar</button>
-      <input id="file-backup" type="file" accept="application/json,.json" hidden>
+      <button id="btn-backup" class="btn btn-ghost">💾 Backup</button>
+      <button id="btn-restore" class="btn btn-ghost">📂 Restaurar</button>
+      <input type="file" id="file-backup" accept=".json" style="display:none">
     </div>
-  </header>
+  </div>
 
-  <main>
-    <section class="section">
-      <h2 class="section-title">📋 Regras do bolão</h2>
-      <div class="regras">
-        <div class="regra-bloco">
-          <h3>Como funciona</h3>
-          <p>Bolão entre os colegas da firma, valendo durante toda a <b>fase de grupos</b> da Copa.
-             Cada apostador dá um <b>palpite de placar</b> nos jogos selecionados; quando o jogo
-             acaba, lança-se o <b>resultado real</b> e o sistema soma os pontos no <b>ranking</b>.</p>
-        </div>
-        <div class="regra-bloco">
-          <h3>⏰ Quais jogos entram (o "jogo do dia")</h3>
-          <ul>
-            <li><b>Dia útil (seg–sex):</b> entra o jogo com horário <b>mais próximo das 13h</b>
-              (horário de Brasília) — a ideia é o jogo do almoço.</li>
-            <li><b>Brasil sempre:</b> <b>todos os jogos do Brasil</b> entram, em qualquer dia e
-              horário (inclusive à noite ou no fim de semana). 🇧🇷</li>
-            <li><b>Fim de semana (sáb/dom):</b> só entram jogos do Brasil.</li>
-            <li><b>Empate de horário:</b> se dois (ou mais) jogos forem no mesmo horário mais
-              próximo das 13h, <b>entram todos</b>.</li>
-          </ul>
-        </div>
-        <div class="regra-bloco">
-          <h3>🏅 Pontuação</h3>
-          <table class="regras-pts">
-            <tr><td class="p">10</td><td>Acertou o <b>placar exato</b> (ex.: previu 2×1 e deu 2×1).</td></tr>
-            <tr><td class="p">7</td><td>Acertou o <b>vencedor + o saldo de gols</b> (ex.: previu 1×0 e deu 2×1).</td></tr>
-            <tr><td class="p">5</td><td>Acertou <b>só o vencedor</b> (ou o empate), com saldo diferente.</td></tr>
-            <tr><td class="p">+1</td><td>Para <b>cada placar de time</b> que você cravar
-              (ex.: previu 2×1 e deu 2×3 → acertou os 2 gols do mandante = <b>1 ponto</b>).</td></tr>
-            <tr><td class="p">0</td><td>Errou tudo.</td></tr>
-          </table>
-          <p class="obs">Os bônus de +1 somam com o 5/7 (ex.: vencedor+saldo certos e ainda
-             cravou os gols do mandante = 8). Placar exato vale 10 cheios.</p>
-        </div>
-        <div class="regra-bloco">
-          <h3>🏆 Ranking</h3>
-          <p>Soma dos pontos de todos os jogos. Critério de desempate: maior número de
-             <b>cravadas</b> (placares exatos). A coluna <b>J</b> mostra quantos jogos a pessoa palpitou.</p>
-        </div>
+  <div class="section">
+    <div class="bet-add">
+      <input type="text" id="bet-novo" placeholder="Nome do apostador">
+      <button id="bet-add-btn" class="btn btn-blue">+ Adicionar</button>
+    </div>
+    <div id="bet-apostadores" class="bet-apostadores" style="margin-bottom: 20px;"></div>
+    
+    <div class="bet-grid">
+      <div class="bet-lado">
+        <h3 class="bet-sub">Ranking</h3>
+        <div id="bet-ranking"></div>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="bet-grid">
-        <div class="bet-lado">
-          <h3 class="bet-sub">🏆 Ranking</h3>
-          <div id="bet-ranking"></div>
-          <h3 class="bet-sub">Apostadores</h3>
-          <div class="bet-add">
-            <input id="bet-novo" type="text" maxlength="24" placeholder="Nome do apostador">
-            <button id="bet-add-btn" class="btn btn-green">+ Adicionar</button>
-          </div>
-          <div id="bet-apostadores" class="bet-apostadores"></div>
-        </div>
-        <div class="bet-lado bet-lado-jogos">
-          <h3 class="bet-sub">Jogos de aposta</h3>
-          <div id="bet-jogos"></div>
-        </div>
+      <div class="bet-lado bet-lado-jogos">
+        <h3 class="bet-sub">Jogos de Aposta</h3>
+        <div id="bet-jogos"></div>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
-  <footer class="rodape">
-    <p>7RD BET · bolão local · os dados ficam salvos no seu navegador. Horários em horário de Brasília.</p>
-  </footer>
-
-  <script src="js/data.js"></script>
-  <script src="data/seed.js"></script>
-  <script src="data/horarios.js"></script>
-  <script src="js/bet.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/betpage.js"></script>
+  <!-- Scripts exclusivos do bolão -->
+  <script src="data.js"></script>
+  <script src="horarios.js"></script>
+  <script src="storage.js"></script>
+  <script src="bet.js"></script>
+  <script src="betpage.js"></script>
 </body>
 </html>
