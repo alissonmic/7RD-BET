@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>7RD BET — Bolão da Copa 2026</title>
-  <!-- Ajustado para buscar na raiz -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="manifest" href="manifest.json" />
 </head>
@@ -94,13 +93,27 @@
     <p>7RD BET · bolão local · os dados ficam salvos no seu navegador. Horários em horário de Brasília.</p>
   </footer>
 
-<script type="module" src="firebase-config.js"></script>
+  <script type="module" src="firebase-config.js"></script>
   
   <script src="data.js"></script>
   <script src="seed.js"></script>
   <script src="horarios.js"></script>
   <script src="bet.js"></script>
   
+  <script>
+    window.TIMES = typeof TIMES !== 'undefined' ? TIMES : {};
+    window.JOGOS_GRUPO = typeof JOGOS_GRUPO !== 'undefined' ? JOGOS_GRUPO : [];
+    window.HORARIOS = typeof HORARIOS !== 'undefined' ? HORARIOS : {};
+    window.SEED_RESULTS = typeof SEED_RESULTS !== 'undefined' ? SEED_RESULTS : {};
+    
+    window.jogosDeAposta = typeof jogosDeAposta !== 'undefined' ? jogosDeAposta : null;
+    window.pontos = typeof pontos !== 'undefined' ? pontos : null;
+    window.rankingBolao = typeof rankingBolao !== 'undefined' ? rankingBolao : null;
+    window._JOGO_INFO = typeof _JOGO_INFO !== 'undefined' ? _JOGO_INFO : {};
+    window._ehBrasil = typeof _ehBrasil !== 'undefined' ? _ehBrasil : null;
+    window._diaSemana = typeof _diaSemana !== 'undefined' ? _diaSemana : null;
+  </script>
+
   <script type="module" src="storage.js"></script>
   <script type="module" src="betpage.js"></script>
   
