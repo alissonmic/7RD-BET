@@ -12,10 +12,12 @@ const DIAS_SEMANA = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
 const ddmm = iso => iso.slice(8) + '/' + iso.slice(5, 7);
 const _esc = s => String(s).replace(/[&<>"']/g, c =>
   ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+
 function flagImg(id){
   const t = TIMES[id];
   return `<img class="flag" src="https://flagcdn.com/w40/${t.flag}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
 }
+
 const _betFlagSigla = id => flagImg(id) + '<b class="bsigla">' + id + '</b>';
 const lerInt = v => { if (v === '' || v == null) return null; const n = parseInt(v, 10); return (isNaN(n) || n < 0) ? null : n; };
 
