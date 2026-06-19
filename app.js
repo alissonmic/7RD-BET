@@ -79,4 +79,98 @@ function renderJogos(){
       : '<p class="bet-vazio">adicione apostadores para palpitar</p>';
     return `<div class="bet-jogo">
       <div class="bet-jogo-head">${cab}</div>
-      <div class="bet-confronto">${_betFlagSigla(info.
+      <div class="bet-confronto">${_betFlagSigla(info.mandante)} <span class="vs">×</span> ${_betFlagSigla(info.visitante)}</div>
+      <div class="bet-real">
+        <span class="bet-real-lbl">Resultado real:</span>
+        <input class="bet-realin" type="number" min="0" inputmode="numeric" data-jogo="${j.id}" data-lado="m" value="${real[0] != null ? real[0] : ''}">
+        <span class="x">×</span>
+        <input class="bet-realin" type="number" min="0" inputmode="numeric" data-jogo="${j.id}" data-lado="v" value="${real[1] != null ? real[1] : ''}">
+        ${estado.placares[j.id] ? `<button class="bet-puxar" data-betpuxar="${j.id}" title="Copiar o placar que está na aba Grupos">↓ da aba Grupos</button>` : ''}
+      </div>
+      ${corpo}
+    </div>`;
+  }).join('') || '<p class="bet-vazio">Sem jogos de aposta no período.</p>';
+}
+
+function render(){ renderApostadores(); renderRanking(); renderJogos(); }
+
+function atualizarDerivados(){
+  const bet = estado.bet;
+  jogosDeAposta().forEach(j => {
+    bet.apostadores.forEach((n, i) => {
+      const cel = $(`[data-pts="${j.id}|${i}"]`);
+      if (!cel) return;
+      const palp = bet.palpites[j.id] && bet.palpites[j.id][n];
+      const pp = pontos(palp, bet.resultados[j.id]);
+      cel.textContent = (pp == null ? '–' : pp);
+    });
+  });
+  renderRanking();
+}
+
+document.addEventListener('input', (ev) => {
+  const el = ev.target;
+  if (el.classList.contains('bet-palp')){
+    const id = el.dataset.jogo, nome = estado.bet.apostadores[+el.dataset.apidx];
+    const ins = el.closest('tr').querySelectorAll('input.bet-palp');
+    const gm = lerInt([...ins].find(i => i.dataset.lado === 'm').value);
+    const gv = lerInt([...ins].find(i => i.dataset.lado === 'v').value);
+    estado.bet.palpites[id] = estado.bet.palpites[id] || {};
+    if (gm == null && gv == null) delete estado.bet.palpites[id][nome];
+    else estado.bet.palpites[id][nome] = [gm, gv];
+    salvarEstado(estado); atualizarDerivados();
+  }
+  if (el.classList.contains('bet-realin')){
+    const id = el.dataset.jogo;
+    const ins = el.closest('.bet-real').querySelectorAll('input.bet-realin');
+    const gm = lerInt([...ins].find(i => i.dataset.lado === 'm').value);
+    const gv = lerInt([...ins].find(i => i.dataset.lado === 'v').value);
+    if (gm == null && gv == null) delete estado.bet.resultados[id];
+    else estado.bet.resultados[id] = [gm, gv];
+    salvarEstado(estado); atualizarDerivados();
+  }
+});
+
+document.addEventListener('click', (ev) => {
+  const del = ev.target.closest('[data-betdel]');
+  if (del){
+    const i = +del.dataset.betdel, nome = estado.bet.apostadores[i];
+    estado.bet.apostadores.splice(i, 1);
+    Object.keys(estado.bet.palpites).forEach(mid => { if (estado.bet.palpites[mid]) delete estado.bet.palpites[mid][nome]; });
+    salvarEstado(estado); render(); return;
+  }
+  const puxar = ev.target.closest('[data-betpuxar]');
+  if (puxar){
+    const id = puxar.dataset.betpuxar;
+    if (estado.placares[id]) estado.bet.resultados[id] = estado.placares[id].slice();
+    salvarEstado(estado); renderJogos(); renderRanking(); return;
+  }
+});
+
+function addApostador(){
+  const inp = $('#bet-novo'), nome = inp.value.trim();
+  if (!nome) return;
+  if (estado.bet.apostadores.some(n => n.toLowerCase() === nome.toLowerCase())){ inp.value = ''; return; }
+  estado.bet.apostadores.push(nome);
+  inp.value = '';
+  salvarEstado(estado); render(); inp.focus();
+}
+$('#bet-add-btn').addEventListener('click', addApostador);
+$('#bet-novo').addEventListener('keydown', (e) => { if (e.key === 'Enter') addApostador(); });
+
+$('#btn-backup').addEventListener('click', () => baixarBackup(estado));
+$('#btn-restore').addEventListener('click', () => $('#file-backup').click());
+$('#file-backup').addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  if (f && confirm('Restaurar este backup vai SUBSTITUIR os dados atuais. Continuar?')){
+    lerBackup(f, (st) => { estado = st; render(); });
+  }
+  e.target.value = '';
+});
+
+// Inicialização via Firebase
+let estado;
+carregarEstado((dados) => {
+  estado = dados;
+  render();
+});
