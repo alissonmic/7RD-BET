@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Copa do Mundo 2026 — Chaveamento ao vivo</title>
-  <!-- Ajustado para buscar na raiz -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="manifest" href="manifest.json" />
 </head>
@@ -54,11 +53,10 @@
   </main>
 
   <footer class="rodape">
-    <p>Site local · dados da 1ª rodada (18/06/2026) via páginas oficiais da Wikipédia ·
-       alocação dos 8 melhores 3º colocados segue os parâmetros de confronto da FIFA.</p>
+    <p>Site local · dados da 1ª rodada via páginas oficiais ·
+       alocação dos melhores 3º colocados segue os parâmetros da FIFA.</p>
   </footer>
 
-  <!-- Todos os caminhos de pasta foram removidos -->
   <script src="data.js"></script>
   <script src="seed.js"></script>
   <script src="odds.js"></script>
@@ -69,7 +67,6 @@
   <script src="storage.js"></script>
   <script src="app.js"></script>
   
-  <!-- Código para o PWA (App de celular) -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
